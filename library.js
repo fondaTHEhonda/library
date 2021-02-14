@@ -16,13 +16,9 @@ function addToMainLibrary() {
 }
 
 const book1 = new Book("Heat", "Mike Lupica", 100, true);
-const book2 = new Book("The Partner", "John Grisham", 250, true);
+const book2 = new Book("The Partner", "John Grisham", 250, false);
 
 let mainLibrary = [book1, book2];
-
-console.log(book1.title);
-console.log(book2);
-console.log(mainLibrary);
 
 function displayBooks() {
     for(let i = 0; i < mainLibrary.length; i++) {
