@@ -40,3 +40,19 @@ function displayBooks() {
 }
 
 displayBooks();
+
+let addBook = document.getElementById("add-book");
+let cancelBtn = document.getElementById('cancel');
+
+function openForm() {
+    document.getElementById("entry-form").style.display = "flex";
+    document.getElementById("entry-form").style.flexDirection = "column"
+    document.getElementById("entry-form").style.marginLeft = "750px"
+}
+
+function closeForm() {
+    document.getElementById("entry-form").style.display = "none";
+}
+
+addBook.addEventListener('click', openForm);
+cancelBtn.addEventListener('click', closeForm);
