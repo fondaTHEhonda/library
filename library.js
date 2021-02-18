@@ -15,18 +15,23 @@ function addToMainLibrary() {
     //Push new Object into Array
 }
 
+// Example Objects
 const book1 = new Book("Heat", "Mike Lupica", 100, true);
 const book2 = new Book("The Partner", "John Grisham", 250, false);
 
 let mainLibrary = [book1, book2];
 
+// Function to display books on page
 function displayBooks() {
     for(let i = 0; i < mainLibrary.length; i++) {
         let newDiv = document.createElement('DIV');
         let newP = document.createElement('P');
+        let deleteEntry = document.createElement("BUTTON");
         document.getElementById("library").appendChild(newDiv);
         newDiv.appendChild(newP);
+        newDiv.appendChild(deleteEntry);
         newP.textContent = "Title: " + mainLibrary[i].title + " " + "Author: " + mainLibrary[i].author + " " + "Pages: " + mainLibrary[i].pages;
+        deleteEntry.textContent = "Remove";
         if(mainLibrary[i].read === true) {
             let newInput = document.createElement("P");
             newDiv.appendChild(newInput);
@@ -39,8 +44,9 @@ function displayBooks() {
     }
 }
 
-displayBooks();
 
+
+// Opening and Closing the form to add new book
 let addBook = document.getElementById("add-book");
 let cancelBtn = document.getElementById('cancel');
 
@@ -56,3 +62,19 @@ function closeForm() {
 
 addBook.addEventListener('click', openForm);
 cancelBtn.addEventListener('click', closeForm);
+
+// Function to create new Book object on form submission
+const form = document.getElementById('entry-form');
+
+function createBook(event) {
+    //title = document.getElementById('title').value;
+   // author = document.getElementById('author').value;
+   // pages = document.getElementById('pages').value;
+
+    newBook = new Book(document.getElementById('title').value, document.getElementById('author').value, document.getElementById('pages').value);
+    mainLibrary.push(newBook);
+    event.preventDefault();
+}
+
+form.addEventListener('submit', createBook);
+displayBooks();
