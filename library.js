@@ -65,16 +65,25 @@ cancelBtn.addEventListener('click', closeForm);
 
 // Function to create new Book object on form submission
 const form = document.getElementById('entry-form');
+const trueRadio = document.getElementById('true');
+const falseRadio = document.getElementById('false');
 
 function createBook(event) {
-    //title = document.getElementById('title').value;
-   // author = document.getElementById('author').value;
-   // pages = document.getElementById('pages').value;
+    bookTitle = document.getElementById('title').value;
+    bookAuthor = document.getElementById('author').value;
+    bookPages = document.getElementById('pages').value;
+    bookRead = true;
 
-    newBook = new Book(document.getElementById('title').value, document.getElementById('author').value, document.getElementById('pages').value);
-    mainLibrary.push(newBook);
+    if(falseRadio.checked) {
+        read = false;
+    }
+
     event.preventDefault();
+
+    newBook = new Book(bookTitle, bookAuthor, parseInt(bookPages), bookRead);
+    mainLibrary.push(newBook);
+    console.log(mainLibrary);
 }
 
-form.addEventListener('submit', createBook);
+form.addEventListener('submit', createBook); 
 displayBooks();
