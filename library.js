@@ -23,20 +23,31 @@ let mainLibrary = [book1, book2];
 
 // Function to display books on page
 function displayBooks() {
+    document.getElementById("library").innerHTML = "";
     for(let i = 0; i < mainLibrary.length; i++) {
         let newDiv = document.createElement('DIV');
-        let newP = document.createElement('P');
+        let titleP = document.createElement('P');
+        let authorP = document.createElement('P');
+        let pagesP = document.createElement("P");
         let deleteEntry = document.createElement("BUTTON");
+        let toggleRead = document.createElement("BUTTON");
+        newDiv.className = "book-info";
         document.getElementById("library").appendChild(newDiv);
-        newDiv.appendChild(newP);
-        newDiv.appendChild(deleteEntry);
-        newP.textContent = "Title: " + mainLibrary[i].title + " " + "Author: " + mainLibrary[i].author + " " + "Pages: " + mainLibrary[i].pages;
+        newDiv.appendChild(titleP);
+        newDiv.appendChild(authorP)
+        newDiv.appendChild(pagesP);
+        titleP.textContent = "Title: " + mainLibrary[i].title;
+        authorP.textContent = "Author: " + mainLibrary[i].author;
+        pagesP.textContent = "Pages: " + mainLibrary[i].pages;
         deleteEntry.textContent = "Remove";
+        toggleRead.textContent = "Mark Read";
+        newDiv.appendChild(toggleRead);
+        newDiv.appendChild(deleteEntry);
         if(mainLibrary[i].read === true) {
             let newInput = document.createElement("P");
             newDiv.appendChild(newInput);
             newInput.textContent = "I have read this book."
-        } else {
+        } else if(mainLibrary[i].read === false) {
             let newerP = document.createElement("P");
             newDiv.appendChild(newerP);
             newerP.textContent = "I have not read this book."
@@ -68,21 +79,25 @@ const form = document.getElementById('entry-form');
 const trueRadio = document.getElementById('true');
 const falseRadio = document.getElementById('false');
 
+
 function createBook(event) {
-    bookTitle = document.getElementById('title').value;
-    bookAuthor = document.getElementById('author').value;
-    bookPages = document.getElementById('pages').value;
-    bookRead = true;
+    let bookTitle = document.getElementById('title').value;
+    let bookAuthor = document.getElementById('author').value;
+    let bookPages = document.getElementById('pages').value;
+    let bookRead;
 
     if(falseRadio.checked) {
-        read = false;
+        bookRead = false;
+    } else {
+        bookRead = true;
     }
-
-    event.preventDefault();
 
     newBook = new Book(bookTitle, bookAuthor, parseInt(bookPages), bookRead);
     mainLibrary.push(newBook);
     console.log(mainLibrary);
+    displayBooks();
+    document.getElementById("entry-form").style.display = "none";
+    event.preventDefault();
 }
 
 form.addEventListener('submit', createBook); 

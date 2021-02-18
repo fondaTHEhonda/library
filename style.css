@@ -60,3 +60,21 @@ header {
     top: 0;
     right: 0;
 }
+
+p {
+    margin: 0px;
+    padding: 10px;
+}
+
+#library {
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+    flex-wrap: wrap;
+}
+
+.book-info {
+    display: flex;
+    flex-direction: column;
+    padding: 15px; 
+}
