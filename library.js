@@ -31,16 +31,18 @@ function displayBooks() {
         let pagesP = document.createElement("P");
         let deleteEntry = document.createElement("BUTTON");
         let toggleRead = document.createElement("BUTTON");
-        newDiv.className = "book-info";
         document.getElementById("library").appendChild(newDiv);
         newDiv.appendChild(titleP);
         newDiv.appendChild(authorP)
         newDiv.appendChild(pagesP);
+        newDiv.className = "book-info";
         titleP.textContent = "Title: " + mainLibrary[i].title;
         authorP.textContent = "Author: " + mainLibrary[i].author;
         pagesP.textContent = "Pages: " + mainLibrary[i].pages;
         deleteEntry.textContent = "Remove";
+        deleteEntry.className = "remove-book";
         toggleRead.textContent = "Mark Read";
+        toggleRead.className = "toggle-read";
         newDiv.appendChild(toggleRead);
         newDiv.appendChild(deleteEntry);
         if(mainLibrary[i].read === true) {
@@ -55,7 +57,35 @@ function displayBooks() {
     }
 }
 
+//Getting the book
 
+function getBook(bookTitle) {
+    for(let book of mainLibrary) {
+        if(book.title === bookTitle) {
+            return book
+        }
+    }
+    return null
+}
+
+//Removing Books
+const libraryDisplay = document.getElementById('library');
+
+function removeBook(bookTitle) {
+        mainLibrary.filter((book) => book.title !== bookTitle);
+
+}
+
+//Removing Book and changing read status
+function changeOrDelete(e) {
+    if(e.target.classList.contains("remove-book")) {
+        console.log(e.target.parentNode.firstChild.innerHTML)
+        removeBook(e.target.parentNode.firstChild.innerHTML);
+        e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+    }
+    
+}
+libraryDisplay.addEventListener('click', changeOrDelete);
 
 // Opening and Closing the form to add new book
 let addBook = document.getElementById("add-book");
@@ -79,7 +109,7 @@ const form = document.getElementById('entry-form');
 const trueRadio = document.getElementById('true');
 const falseRadio = document.getElementById('false');
 
-
+// Function to add new book to object and array based on information given in the form
 function createBook(event) {
     let bookTitle = document.getElementById('title').value;
     let bookAuthor = document.getElementById('author').value;
@@ -101,4 +131,7 @@ function createBook(event) {
 }
 
 form.addEventListener('submit', createBook); 
+
+
+
 displayBooks();
