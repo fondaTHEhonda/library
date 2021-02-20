@@ -19,7 +19,7 @@ function addToMainLibrary() {
 const book1 = new Book("Heat", "Mike Lupica", 100, true);
 const book2 = new Book("The Partner", "John Grisham", 250, false);
 
-let mainLibrary = [book1, book2];
+let mainLibrary = [];
 
 // Function to display books on page
 function displayBooks() {
@@ -39,20 +39,15 @@ function displayBooks() {
         titleP.textContent = "Title: " + mainLibrary[i].title;
         authorP.textContent = "Author: " + mainLibrary[i].author;
         pagesP.textContent = "Pages: " + mainLibrary[i].pages;
-        deleteEntry.textContent = "Remove";
         deleteEntry.className = "remove-book";
-        toggleRead.textContent = "Mark Read";
+        deleteEntry.textContent = "Remove";
         toggleRead.className = "toggle-read";
         newDiv.appendChild(toggleRead);
         newDiv.appendChild(deleteEntry);
         if(mainLibrary[i].read === true) {
-            let newInput = document.createElement("P");
-            newDiv.appendChild(newInput);
-            newInput.textContent = "I have read this book."
+            toggleRead.textContent = "Read"
         } else if(mainLibrary[i].read === false) {
-            let newerP = document.createElement("P");
-            newDiv.appendChild(newerP);
-            newerP.textContent = "I have not read this book."
+            toggleRead.textContent = "Not Read";
         }
     }
 }
@@ -79,9 +74,21 @@ function removeBook(bookTitle) {
 //Removing Book and changing read status
 function changeOrDelete(e) {
     if(e.target.classList.contains("remove-book")) {
-        console.log(e.target.parentNode.firstChild.innerHTML)
-        removeBook(e.target.parentNode.firstChild.innerHTML);
+        console.log(e.target.parentNode.firstChild.textContent)
+        removeBook(e.target.parentNode.firstChild.textContent);
         e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+    } else if(e.target.classList.contains('toggle-read')) {
+        if(e.target.textContent = "Read") {
+            getBook(e.target.parentNode.firstChild.textContent).read = false;
+            e.target.textContent = "Not Read";
+            e.target.classList.remove("book-is-read");
+            e.target.classList.add("book-is-not-read");
+        } else {
+            getBook(e.target.parentNode.firstChild.textContent).read = true;
+            e.target.textContent = "Not Read";
+            e.target.classList.remove("book-is-not-read");
+            e.target.classList.add("book-is-read");
+        }
     }
     
 }
