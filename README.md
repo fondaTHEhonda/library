@@ -7,9 +7,9 @@
 4. Add a “NEW BOOK” button that brings up a form allowing users to input the details for the new book: author, title, number of pages, whether it’s been read and anything else you might want. COMPLETE
 
 5. Add a button on each book’s display to remove the book from the library.
-    You will need to associate your DOM elements with the actual book objects in some way. One easy solution is giving them a data-attribute that corresponds to the index of the library array.
+    You will need to associate your DOM elements with the actual book objects in some way. One easy solution is giving them a data-attribute that corresponds to the index of the library array. COMPLETE
 
-6. Add a button on each book’s display to change its read status.
+6. Add a button on each book’s display to change its read status. COMPLETE
     To facilitate this you will want to create the function that toggles a book’s read status on your Book prototype instance.
 
 7. Optional -we haven’t learned any techniques for actually storing our data anywhere, so when the user refreshes the page all of their books will disappear! If you want, you are capable of adding some persistence to this library app using one of the following techniques:

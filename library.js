@@ -50,19 +50,24 @@ function displayBooks() {
         toggleRead.className = "toggle-read"
         newDiv.appendChild(toggleRead);
         newDiv.appendChild(deleteEntry);
+        saveData();
         toggleRead.addEventListener("click", () => {
             if(mainLibrary[i].read === true) {
                 toggleRead.textContent = "Not Read";
                 mainLibrary[i].read = false;
+                saveData();
             } else if(mainLibrary[i].read === false) {
                 toggleRead.textContent = "Read";
                 mainLibrary[i].read = true;
+                saveData();
             }
         })
         if(mainLibrary[i].read === true) {
             toggleRead.textContent = "Read"
+            saveData();
         } else if(mainLibrary[i].read === false) {
             toggleRead.textContent = "Not Read";
+            saveData();
         }
     }
         
@@ -74,7 +79,7 @@ const libraryDisplay = document.getElementById('library');
 
 function removeBook(bookTitle) {
         mainLibrary.filter((book) => book.title !== bookTitle);
-
+        saveData();
 }
 
 //Removing Book
@@ -82,6 +87,7 @@ function alterLibrary(e) {
     if(e.target.classList.contains("remove-book")) {
         removeBook(e.target.parentNode.firstChild.textContent);
         e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+        saveData();
     }
 }
 libraryDisplay.addEventListener('click', alterLibrary);
@@ -111,13 +117,15 @@ function createBook(event) {
 
     if(readCheck.checked) {
         bookRead = true;
+        saveData();
     } else {
         bookRead = false;
+        saveData();
     }
 
     newBook = new Book(bookTitle, bookAuthor, parseInt(bookPages), bookRead);
     mainLibrary.push(newBook);
-    console.log(mainLibrary);
+    saveData();
     displayBooks();
     document.getElementById("entry-form").style.display = "none";
     event.preventDefault();
@@ -125,4 +133,19 @@ function createBook(event) {
 
 form.addEventListener('submit', createBook); 
 
-displayBooks();
+function saveData() {
+    localStorage.setItem('mainLibrary', JSON.stringify(mainLibrary));
+}
+
+function loadData() {
+    if(!localStorage.mainLibrary) {
+        displayBooks();
+    } else {
+        let theLibrary = localStorage.getItem("mainLibrary");
+        theLibrary = JSON.parse(theLibrary);
+        mainLibrary = theLibrary;
+        displayBooks();
+    }
+}
+
+loadData();
