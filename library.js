@@ -11,7 +11,7 @@ let cancelBtn = document.getElementById('cancel');
 // Example Objects
 const book1 = new Book("Heat", "Mike Lupica", 100, true);
 const book2 = new Book("The Partner", "John Grisham", 250, false);
-let mainLibrary = [book1, book2];
+let mainLibrary = [];
 
 
 function Book(title, author, pages, read) {
@@ -48,29 +48,35 @@ function displayBooks() {
         deleteEntry.className = "remove-book";
         deleteEntry.textContent = "Remove";
         toggleRead.className = "toggle-read"
+        if(mainLibrary[i].read === true) {
+            toggleRead.classList.add("book-read");
+        } else {
+            toggleRead.classList.add("book-not-read");
+        }
         newDiv.appendChild(toggleRead);
         newDiv.appendChild(deleteEntry);
-        saveData();
         toggleRead.addEventListener("click", () => {
             if(mainLibrary[i].read === true) {
                 toggleRead.textContent = "Not Read";
                 mainLibrary[i].read = false;
-                saveData();
+                toggleRead.classList.remove("book-read");
+                toggleRead.classList.add("book-not-read");
+
             } else if(mainLibrary[i].read === false) {
                 toggleRead.textContent = "Read";
                 mainLibrary[i].read = true;
-                saveData();
+                toggleRead.classList.add("book-read");
+                toggleRead.classList.remove("book-not-read");
+
             }
         })
         if(mainLibrary[i].read === true) {
             toggleRead.textContent = "Read"
-            saveData();
+
         } else if(mainLibrary[i].read === false) {
             toggleRead.textContent = "Not Read";
-            saveData();
         }
-    }
-        
+    }   
 }
 
 
@@ -78,8 +84,7 @@ function displayBooks() {
 const libraryDisplay = document.getElementById('library');
 
 function removeBook(bookTitle) {
-        mainLibrary.filter((book) => book.title !== bookTitle);
-        saveData();
+       mainLibrary.splice(mainLibrary.indexOf(bookTitle), 1);
 }
 
 //Removing Book
@@ -102,6 +107,7 @@ function openForm() {
 
 function closeForm() {
     document.getElementById("entry-form").style.display = "none";
+    
 }
 
 addBook.addEventListener('click', openForm);
@@ -117,15 +123,12 @@ function createBook(event) {
 
     if(readCheck.checked) {
         bookRead = true;
-        saveData();
     } else {
         bookRead = false;
-        saveData();
     }
 
     newBook = new Book(bookTitle, bookAuthor, parseInt(bookPages), bookRead);
     mainLibrary.push(newBook);
-    saveData();
     displayBooks();
     document.getElementById("entry-form").style.display = "none";
     event.preventDefault();
@@ -138,14 +141,9 @@ function saveData() {
 }
 
 function loadData() {
-    if(!localStorage.mainLibrary) {
-        displayBooks();
-    } else {
-        let theLibrary = localStorage.getItem("mainLibrary");
-        theLibrary = JSON.parse(theLibrary);
-        mainLibrary = theLibrary;
-        displayBooks();
+    mainLibrary = JSON.parse(localStorage.getItem("mainLibrary"));
+    if(mainLibrary === null) mainLibrary = [];
+    displayBooks();
     }
-}
 
 loadData();

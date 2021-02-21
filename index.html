@@ -21,11 +21,12 @@
                 <input type="text" placeholder="Author" name="author" id="author" required>
                 <label for="pages">Pages:</label>
                 <input type="text" placeholder="Number of Pages" name="pages" id="pages" required>
-                <label name="read">Completed?</label>
-                <label name="yes">Yes</label>
+                <div id='checkbox'>
+                <label name="read" id='complete'>Completed?</label>
                 <input type="checkbox" name="read" class="check" id="true">
+                </div>
                 <button class="submit-button" type="Submit" id='submit'>Submit</button>
-                <button id="cancel" type="button">X</button>
+                <button id="cancel" type="button">Cancel</button>
             </form>
         </div>
         <div id="library">
